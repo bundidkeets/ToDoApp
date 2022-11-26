@@ -30,6 +30,7 @@ DEPENDENCIES:
   - Moya
   - Moya-ObjectMapper/RxSwift
   - Moya/RxSwift
+  - RxCocoa
   - RxGesture
   - SwipeCellKit
 
@@ -56,6 +57,6 @@ SPEC CHECKSUMS:
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: f5ab5b229d07e22826cdae94ec4f04a6cf033df0
+PODFILE CHECKSUM: 9391d3b46869cffbfefe3d7eb00d069f0ad91edc
 
 COCOAPODS: 1.11.3

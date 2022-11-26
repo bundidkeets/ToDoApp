@@ -9,6 +9,7 @@ target 'ToDoApp' do
   pod 'Moya'
   pod 'Moya/RxSwift'
   pod 'RxGesture'
+  pod 'RxCocoa'
   pod 'Moya-ObjectMapper/RxSwift'
   pod 'SwipeCellKit'
 end
