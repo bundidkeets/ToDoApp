@@ -27,11 +27,22 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isAge" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                <integer key="value" value="50"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XfH-CH-QN8">
                                         <rect key="frame" x="0.0" y="66" width="200" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K27-Ix-eE9">
                                         <rect key="frame" x="0.0" y="139" width="200" height="35"/>
@@ -113,10 +124,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="emailField" destination="DRb-hn-daX" id="Zbp-PA-FxF"/>
                         <outlet property="loginButton" destination="K27-Ix-eE9" id="n3k-pk-VT0"/>
                         <outlet property="passwordField" destination="XfH-CH-QN8" id="d4f-8z-85Y"/>
                         <outlet property="registerButton" destination="n9N-24-AM3" id="5nT-Nu-KBn"/>
-                        <outlet property="userField" destination="DRb-hn-daX" id="6y8-N5-VyF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

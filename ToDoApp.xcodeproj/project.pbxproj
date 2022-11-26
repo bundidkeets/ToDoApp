@@ -30,6 +30,8 @@
 		B0D1DE5C2931FA9100494D1B /* NewTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D1DE582931FA9100494D1B /* NewTaskView.swift */; };
 		B0D1DE5D2931FA9100494D1B /* NewTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D1DE592931FA9100494D1B /* NewTaskModel.swift */; };
 		B0D1DE5E2931FA9100494D1B /* NewTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D1DE5A2931FA9100494D1B /* NewTaskViewModel.swift */; };
+		B0D1DE6129320E1300494D1B /* ConnectivityContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D1DE6029320E1300494D1B /* ConnectivityContext.swift */; };
+		B0D1DE6429320E8C00494D1B /* AuthenticateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D1DE6329320E8C00494D1B /* AuthenticateAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		B0D1DE582931FA9100494D1B /* NewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskView.swift; sourceTree = "<group>"; };
 		B0D1DE592931FA9100494D1B /* NewTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskModel.swift; sourceTree = "<group>"; };
 		B0D1DE5A2931FA9100494D1B /* NewTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewModel.swift; sourceTree = "<group>"; };
+		B0D1DE6029320E1300494D1B /* ConnectivityContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityContext.swift; sourceTree = "<group>"; };
+		B0D1DE6329320E8C00494D1B /* AuthenticateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateAPI.swift; sourceTree = "<group>"; };
 		DBDC94E501492756B8919927 /* Pods-ToDoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.release.xcconfig"; sourceTree = "<group>"; };
 		DF67381A7604828849463267 /* Pods-ToDoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.debug.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +108,7 @@
 		B0A15D0D2931D2FB0018D98B /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				B0D1DE5F29320DED00494D1B /* Connectivity */,
 				B0D1DE4C2931F13700494D1B /* ToDo */,
 				B0D1DE302931E4F500494D1B /* Authenticate */,
 				B0D1DE2F2931E4E300494D1B /* Common */,
@@ -185,6 +190,23 @@
 				B0D1DE5A2931FA9100494D1B /* NewTaskViewModel.swift */,
 			);
 			path = NewTask;
+			sourceTree = "<group>";
+		};
+		B0D1DE5F29320DED00494D1B /* Connectivity */ = {
+			isa = PBXGroup;
+			children = (
+				B0D1DE6229320E6900494D1B /* API */,
+				B0D1DE6029320E1300494D1B /* ConnectivityContext.swift */,
+			);
+			path = Connectivity;
+			sourceTree = "<group>";
+		};
+		B0D1DE6229320E6900494D1B /* API */ = {
+			isa = PBXGroup;
+			children = (
+				B0D1DE6329320E8C00494D1B /* AuthenticateAPI.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		EE886A8E09F4B1BFE78C8CF9 /* Frameworks */ = {
@@ -322,9 +344,11 @@
 				B0D1DE5E2931FA9100494D1B /* NewTaskViewModel.swift in Sources */,
 				B0D1DE402931E51400494D1B /* RegisterView.swift in Sources */,
 				B0D1DE492931F12F00494D1B /* ToDoListView.swift in Sources */,
+				B0D1DE6129320E1300494D1B /* ConnectivityContext.swift in Sources */,
 				B0D1DE412931E51400494D1B /* RegisterModel.swift in Sources */,
 				B0A15D0F2931D2FB0018D98B /* AppDelegate.swift in Sources */,
 				B0D1DE5C2931FA9100494D1B /* NewTaskView.swift in Sources */,
+				B0D1DE6429320E8C00494D1B /* AuthenticateAPI.swift in Sources */,
 				B0D1DE382931E50B00494D1B /* LoginView.swift in Sources */,
 				B0D1DE422931E51400494D1B /* RegisterViewModel.swift in Sources */,
 				B0D1DE4A2931F12F00494D1B /* ToDoListModel.swift in Sources */,

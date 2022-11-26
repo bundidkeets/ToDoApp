@@ -12,4 +12,6 @@ target 'ToDoApp' do
   pod 'RxCocoa'
   pod 'Moya-ObjectMapper/RxSwift'
   pod 'SwipeCellKit'
+  pod 'PKHUD'
+  pod 'IQKeyboardManagerSwift'
 end
