@@ -33,6 +33,8 @@ class MainViewController: UIViewController {
         onSuccess = { [weak self] in
             self?.dismissWaiting()
             print("go todo list")
+            let todoVC = ToDoListView.createModule(with: ToDoListViewModel())
+            self?.navigationController?.pushViewController(todoVC, animated: true)
         }
     }
 
@@ -85,6 +87,38 @@ extension UIViewController {
     
     public func dismissWaiting(){
         HUD.hide()
+    }
+}
+
+extension UIView {
+    func setCircle(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.layer.cornerRadius = self.frame.size.width / 2.0
+        }
+    }
+    
+    func setRectangle(){
+        layer.cornerRadius = 8.0
+    }
+    
+    func setBorder(_ width: CGFloat,color: UIColor) {
+        layer.borderColor = color.cgColor
+        layer.borderWidth = width
+    }
+    
+    public func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
+        let maskPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let shape = CAShapeLayer()
+        shape.path = maskPath.cgPath
+        layer.mask = shape
+        
+        let borderLayer = CAShapeLayer()
+        borderLayer.path = maskPath.cgPath
+        borderLayer.fillColor = UIColor.clear.cgColor
+        borderLayer.strokeColor = UIColor.clear.cgColor
+        borderLayer.lineWidth = 4
+        borderLayer.frame = bounds
+        layer.addSublayer(borderLayer)
     }
 }
 

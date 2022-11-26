@@ -51,7 +51,9 @@ class LoginView: UIViewController {
         viewModel.onSuccess = { [weak self] event in
             UserDefaults.standard.setValue(event.token, forKey: "accessToken")
             self?.dismissWaiting()
-            print("go todo list.")
+            print("go todo list")
+            let todoVC = ToDoListView.createModule(with: ToDoListViewModel())
+            self?.navigationController?.pushViewController(todoVC, animated: true)
         }
     }
     

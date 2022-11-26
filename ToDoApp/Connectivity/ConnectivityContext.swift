@@ -11,7 +11,8 @@ import RxSwift
 import Moya_ObjectMapper
 
 public class ConnectivityContext: NSObject {
-    fileprivate var authenProvider: UncacheProvider<AuthenticateAPI>? 
+    fileprivate var authenProvider: UncacheProvider<AuthenticateAPI>?
+    fileprivate var todoProvider: UncacheProvider<TodoAPI>?
     
     public override init() {
         super.init()
@@ -21,10 +22,13 @@ public class ConnectivityContext: NSObject {
     func setupProvider(){
         let authURL = { () -> URL in return URL(string: "https://api-nodejs-todolist.herokuapp.com")! }
         authenProvider = UncacheProvider(authURL)
+        todoProvider = UncacheProvider(authURL)
     }
 }
 
 extension ConnectivityContext {
+    
+    // Authen
     func register(registObject: RegisterModel) -> Observable<Response> {
         return authenProvider!.rx.request(.register(register: registObject))
             .asObservable()
@@ -41,6 +45,13 @@ extension ConnectivityContext {
         return authenProvider!.rx.request(.me)
             .asObservable()
             .mapObject(UserResponse.self)
+    }
+    
+    // To Do
+    func addTask(task: String) -> Observable<Response> {
+        return todoProvider!.rx.request(.addTask(description: task))
+            .asObservable()
+            .filterSuccessfulStatusAndRedirectCodes()
     }
 }
 

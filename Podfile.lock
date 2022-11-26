@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.6.2)
+  - IQActionSheetPickerView (2.0.1)
   - IQKeyboardManagerSwift (6.5.10)
   - Moya (14.0.0):
     - Moya/Core (= 14.0.0)
@@ -27,8 +28,10 @@ PODS:
     - RxSwift (~> 5)
   - RxSwift (5.1.3)
   - SwipeCellKit (2.7.1)
+  - UIColor_Hex_Swift (5.1.7)
 
 DEPENDENCIES:
+  - IQActionSheetPickerView
   - IQKeyboardManagerSwift
   - Moya
   - Moya-ObjectMapper/RxSwift
@@ -37,10 +40,12 @@ DEPENDENCIES:
   - RxCocoa
   - RxGesture
   - SwipeCellKit
+  - UIColor_Hex_Swift
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - IQActionSheetPickerView
     - IQKeyboardManagerSwift
     - Moya
     - Moya-ObjectMapper
@@ -51,9 +56,11 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - SwipeCellKit
+    - UIColor_Hex_Swift
 
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  IQActionSheetPickerView: c9f72981ed76d76b90c93aa7b33ba9dfebdff62b
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   Moya-ObjectMapper: 967a99d9ea3aa9c93ddbe112aeca3667f53bfe93
@@ -64,7 +71,8 @@ SPEC CHECKSUMS:
   RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
+  UIColor_Hex_Swift: 31cd3e47440f07a20d2503a36bb0437a445b3c29
 
-PODFILE CHECKSUM: 05b9389d6bddf0d57b2df5dc6ef20919449f226c
+PODFILE CHECKSUM: bcba80e9ebb13eb94e0bc7f48fc86d76eb990832
 
 COCOAPODS: 1.11.3
