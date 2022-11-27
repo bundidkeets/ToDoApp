@@ -22,6 +22,8 @@ public enum TodoAPI {
     case getTask
     case getTaskById(id: String)
     case getCompleted
+    case finishedTaskById(id: String)
+    case deleteTaskById(id: String)
 }
 
 extension TodoAPI: TargetType {
@@ -69,6 +71,10 @@ extension TodoAPI: TargetType {
             return "/task?completed=true"
         case .getTaskById(id: let id):
             return "/task/\(id)"
+        case .finishedTaskById(id: let id):
+            return "/task/\(id)"
+        case .deleteTaskById(id: let id):
+            return "/task/\(id)"
         }
     }
     
@@ -82,6 +88,10 @@ extension TodoAPI: TargetType {
             return .get
         case .getTaskById:
             return .get
+        case .finishedTaskById:
+            return .put
+        case .deleteTaskById:
+            return .delete
         }
     }
     
@@ -89,6 +99,10 @@ extension TodoAPI: TargetType {
         switch self {
         case .addTask(let description):
             let json = ["description": description]
+            return json
+        
+        case .finishedTaskById(_):
+            let json = ["completed": true]
             return json
     
         default:

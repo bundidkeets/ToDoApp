@@ -16,6 +16,8 @@ protocol ToDoListViewModelInput {
     func getTaskById(_ id: String)
     func getDoneList()
     func logout()
+    func deleteTaskById(_ id: [String])
+    func finishedTaskById(_ id: [String])
 }
 
 // MARK: ViewModel -> View
@@ -24,6 +26,8 @@ protocol ToDoListViewModelOutput {
     var onSuccessGetTaskById: ((TaskResponse) -> Void)? { get set }
     var onError: ((String) -> Void)? { get set }
     var loggedOut: (() -> Void)? { get set }
+    var afterDelete: (() -> Void)? { get set }
+    var afterComplete: (() -> Void)? { get set }
 }
 
 protocol ToDoListViewModelProtocol: ToDoListViewModelInput, ToDoListViewModelOutput { }
@@ -36,6 +40,8 @@ class ToDoListViewModel: ToDoListViewModelProtocol, ToDoListViewModelOutput {
     var onError: ((String) -> Void)?
     var loggedOut: (() -> Void)?
     var onSuccessGetTaskById: ((TaskResponse) -> Void)?
+    var afterDelete: (() -> Void)?
+    var afterComplete: (() -> Void)?
 }
 
 extension ToDoListViewModel: ToDoListViewModelInput {
@@ -90,6 +96,66 @@ extension ToDoListViewModel: ToDoListViewModelInput {
                     break
                 }
             }.disposed(by: disposeBag)
+    }
+    
+    func deleteTaskById(_ id: [String]){
+        for (index, delId) in id.enumerated() {
+            let taskContext = ConnectivityContext()
+            taskContext.deleteTaskById(id: delId)
+                .subscribe { [weak self] event in
+                    switch event {
+                    case .next:
+                        if index == id.count - 1 {
+                            self?.afterDelete?()
+                        }
+                        
+                    case .error(let error):
+                        if let json = try? JSONSerialization.jsonObject(with: (error as! MoyaError).response!.data, options: .mutableContainers),
+                           let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) {
+                            print(jsonData)
+                            self?.onError?("Have error occurred")
+                            break
+                        } else {
+                            let response = String(data: (error as! MoyaError).response!.data, encoding: .utf8)!
+                            self?.onError?(response)
+                            break
+                        }
+                        
+                    case .completed:
+                        break
+                    }
+                }.disposed(by: disposeBag)
+        }
+    }
+    
+    func finishedTaskById(_ id: [String]){
+        for (index, finId) in id.enumerated() {
+            let taskContext = ConnectivityContext()
+            taskContext.finishedTaskById(id: finId)
+                .subscribe { [weak self] event in
+                    switch event {
+                    case .next:
+                        if index == id.count - 1 {
+                            self?.afterComplete?()
+                        }
+                        
+                    case .error(let error):
+                        if let json = try? JSONSerialization.jsonObject(with: (error as! MoyaError).response!.data, options: .mutableContainers),
+                           let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) {
+                            print(jsonData)
+                            self?.onError?("Have error occurred")
+                            break
+                        } else {
+                            let response = String(data: (error as! MoyaError).response!.data, encoding: .utf8)!
+                            self?.onError?(response)
+                            break
+                        }
+                        
+                    case .completed:
+                        break
+                    }
+                }.disposed(by: disposeBag)
+        }
     }
     
     func getDoneList() {

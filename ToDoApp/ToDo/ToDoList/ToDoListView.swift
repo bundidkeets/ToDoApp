@@ -20,12 +20,12 @@ class ToDoListView: UIViewController {
     // OUTLETS HERE
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var checkButton: UIButton!
-    @IBOutlet weak var modeButton: UIButton!
+    @IBOutlet weak var binButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var checkView: UIView!
-    @IBOutlet weak var modeView: UIView!
+    @IBOutlet weak var binView: UIView!
     @IBOutlet weak var addView: UIView!
     @IBOutlet weak var cancelView: UIView!
     @IBOutlet weak var doneView: UIView!
@@ -46,19 +46,21 @@ class ToDoListView: UIViewController {
     private var rightButton: UIButton?
     private var leftButton: UIButton?
     private var taskList: [NewTaskModel] = []
-    var listMode: listMode? = .defaultMode {
+    var listMode: listMode? = .defaultMode
+    var numberOfSection = 1
+    var checkMode = false {
         didSet {
-            if listMode == .defaultMode {
-                defaultButton()
-            } else if listMode == .calendarMode {
+            if checkMode {
                 checkModeButton()
+            } else {
+                defaultButton()
             }
+            tableView.reloadData()
         }
     }
-    var numberOfSection = 1
-    var checkMode = false
     var isDoneMode = false
     var afterLogout: (() -> Void)?
+    var checkList:[Bool] = []
     
     static func createModule(with viewModel: ToDoListViewModel) -> UIViewController {
         guard let view = UIStoryboard(name: "\(Self.self)", bundle: nil).instantiateInitialViewController() as? ToDoListView else {
@@ -81,6 +83,7 @@ class ToDoListView: UIViewController {
     func setupView() {
         tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "todo")
         listMode = .defaultMode
+        checkMode = false
         navigationItem.hidesBackButton = true
         
         if isDoneMode {
@@ -124,10 +127,8 @@ class ToDoListView: UIViewController {
             menuView.isHidden = false
         }
         
-        
-        
         checkView.setCircle()
-        modeView.setCircle()
+        binView.setCircle()
         addView.setCircle()
         cancelView.setCircle()
         doneView.setCircle()
@@ -209,6 +210,32 @@ class ToDoListView: UIViewController {
             .bind { [weak self] in
                 self?.dismissPopup()
             }.disposed(by: disposeBag)
+        
+        checkButton?.rx.tap
+            .bind { [weak self] in
+                self?.checkMode = true
+            }.disposed(by: disposeBag)
+        
+        binButton?.rx.tap
+            .bind { [weak self] in
+                self?.showAlert("Confirm", message: "Confirm to delete these tasks?", action: "OK", cancelMessage: "Cancel" , completion: { selection in
+                    if selection == true {
+                        self?.deleteChecked()
+                    }
+                })
+            }.disposed(by: disposeBag)
+        
+        cancelButton?.rx.tap
+            .bind { [weak self] in
+                self?.clearChecked()
+                self?.checkMode = false
+            }.disposed(by: disposeBag)
+        
+        doneButton?.rx.tap
+            .bind { [weak self] in
+                self?.completeChecked()
+            }.disposed(by: disposeBag)
+        
     }
     
     func loadTaskList(){
@@ -243,12 +270,56 @@ class ToDoListView: UIViewController {
         popupIconImage.image = UIImage(named: getTaskIcon(item.icon ?? "").imageName)
     }
     
+    func getCheckList() -> [String] {
+        var checkId: [String] = []
+        for (index, listObj) in taskList.enumerated() {
+            if let id = listObj.id {
+                if index >= checkList.count {
+                    continue
+                }
+                
+                if checkList[index] {
+                    checkId.append(id)
+                }
+            }
+        }
+        return checkId
+    }
+    
+    func completeChecked(){
+        let checkList = getCheckList()
+        if checkList.count == 0 { return }
+        viewModel.finishedTaskById(checkList)
+        viewModel.afterComplete = { [weak self] in
+            self?.checkMode = false
+            self?.reloadContent()
+        }
+    }
+    
+    func deleteChecked(){
+        let checkList = getCheckList()
+        if checkList.count == 0 { return }
+        viewModel.deleteTaskById(checkList)
+        viewModel.afterDelete = { [weak self] in
+            self?.checkMode = false
+            self?.reloadContent()
+        }
+    }
+    
+    func clearChecked(){
+        let numeberOfList = checkList.count
+        for index in 0 ... numeberOfList - 1 {
+            checkList[index] = false
+        }
+    }
+    
     func dismissPopup(){
         popupView.isHidden = true
     }
     
     func convertToTaskObject(_ descriptions: [TaskResponse]){
         taskList = []
+        checkList = []
         for data in descriptions {
             guard let desc = data.description ,
                   let id = data.id
@@ -256,6 +327,7 @@ class ToDoListView: UIViewController {
             if let data = desc.data(using: .utf8) {
                 guard var newTaskObj = try? JSONDecoder().decode(NewTaskModel.self, from: data) else { return }
                 newTaskObj.id = id
+                checkList.append(false)
                 taskList.append(newTaskObj)
             }
         }
@@ -277,17 +349,17 @@ class ToDoListView: UIViewController {
     
     func defaultButton(){
         checkView.isHidden = false
-        modeView.isHidden = false
         addView.isHidden = false
         cancelView.isHidden = true
+        binView.isHidden = true
         doneView.isHidden = true
     }
     
     func checkModeButton(){
         checkView.isHidden = true
-        modeView.isHidden = true
         addView.isHidden = true
         cancelView.isHidden = false
+        binView.isHidden = false
         doneView.isHidden = false
     }
     
@@ -334,6 +406,13 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
             cell.checkImage.isHidden = false
             cell.dateLabel.isHidden = true
             cell.timeLabel.isHidden = true
+            
+            if checkList[indexPath.row] {
+                cell.checkImage.image = UIImage(named: "checked")
+            } else {
+                cell.checkImage.image = UIImage(named: "uncheck")
+            }
+            
         }
         
         return cell
@@ -344,6 +423,9 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
             guard let id = taskList[indexPath.row].id else { return }
             showWaiting()
             viewModel.getTaskById(id)
+        } else {
+            checkList[indexPath.row] = !checkList[indexPath.row]
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
     }

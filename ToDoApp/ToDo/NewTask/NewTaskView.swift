@@ -93,6 +93,7 @@ class NewTaskView: UIViewController {
                     taskObj.date = self?.dateField.text
                     taskObj.time = self?.timeField.text
                     taskObj.icon = self?.iconList[self!.selectedIconIndex].imageName
+                    self?.showWaiting()
                     self?.viewModel.addTask(taskObj)
                 }
                 

@@ -77,6 +77,18 @@ extension ConnectivityContext {
             .asObservable()
             .mapObject(ToDoResponse.self)
     }
+    
+    func deleteTaskById(id: String) -> Observable<Response> {
+        return todoProvider!.rx.request(.deleteTaskById(id: id))
+            .asObservable()
+            .filterSuccessfulStatusAndRedirectCodes()
+    }
+    
+    func finishedTaskById(id: String) -> Observable<Response> {
+        return todoProvider!.rx.request(.finishedTaskById(id: id))
+            .asObservable()
+            .filterSuccessfulStatusAndRedirectCodes()
+    }
 }
 
 class UncacheProvider<Target>: MoyaProvider<Target> where Target: TargetType {

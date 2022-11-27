@@ -93,52 +93,8 @@
                                                     <constraint firstItem="Las-H5-Yxp" firstAttribute="centerX" secondItem="KIr-h8-3mD" secondAttribute="centerX" id="avW-xp-c7M"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8x7-9q-P0P">
-                                                <rect key="frame" x="75" y="0.0" width="75" height="100"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GfE-j1-6UV">
-                                                        <rect key="frame" x="7.5" y="20" width="60" height="60"/>
-                                                        <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" translatesAutoresizingMaskIntoConstraints="NO" id="LCJ-Yi-KTs">
-                                                                <rect key="frame" x="18" y="18" width="24" height="24"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="24" id="MHl-p7-558"/>
-                                                                    <constraint firstAttribute="height" constant="24" id="gRp-Ho-hwW"/>
-                                                                </constraints>
-                                                            </imageView>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yM3-Zf-hQK">
-                                                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="plain" title="Calendar"/>
-                                                            </button>
-                                                        </subviews>
-                                                        <color key="backgroundColor" red="1" green="0.57941256539999997" blue="0.42857822080000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                        <constraints>
-                                                            <constraint firstItem="yM3-Zf-hQK" firstAttribute="width" secondItem="GfE-j1-6UV" secondAttribute="width" id="86Q-uI-jmH"/>
-                                                            <constraint firstItem="yM3-Zf-hQK" firstAttribute="height" secondItem="GfE-j1-6UV" secondAttribute="height" id="9dJ-vK-YLk"/>
-                                                            <constraint firstItem="yM3-Zf-hQK" firstAttribute="centerY" secondItem="GfE-j1-6UV" secondAttribute="centerY" id="BNj-rS-dmb"/>
-                                                            <constraint firstItem="LCJ-Yi-KTs" firstAttribute="centerY" secondItem="GfE-j1-6UV" secondAttribute="centerY" id="Btb-1Z-Cyj"/>
-                                                            <constraint firstItem="LCJ-Yi-KTs" firstAttribute="centerX" secondItem="GfE-j1-6UV" secondAttribute="centerX" id="Nqo-A9-mWz"/>
-                                                            <constraint firstAttribute="height" constant="60" id="YKC-6g-g4J"/>
-                                                            <constraint firstAttribute="width" constant="60" id="crj-qw-riy"/>
-                                                            <constraint firstItem="yM3-Zf-hQK" firstAttribute="centerX" secondItem="GfE-j1-6UV" secondAttribute="centerX" id="urk-Rv-U7v"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
-                                                                <integer key="value" value="30"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </view>
-                                                </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstItem="GfE-j1-6UV" firstAttribute="centerX" secondItem="8x7-9q-P0P" secondAttribute="centerX" id="qxd-Al-0CV"/>
-                                                    <constraint firstItem="GfE-j1-6UV" firstAttribute="centerY" secondItem="8x7-9q-P0P" secondAttribute="centerY" id="zNA-rH-zCU"/>
-                                                </constraints>
-                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R0p-TU-quI">
-                                                <rect key="frame" x="150" y="0.0" width="75" height="100"/>
+                                                <rect key="frame" x="75" y="0.0" width="75" height="100"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gUi-uI-PKv">
                                                         <rect key="frame" x="7.5" y="20" width="60" height="60"/>
@@ -182,7 +138,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yJ4-t6-d8N">
-                                                <rect key="frame" x="225" y="0.0" width="75" height="100"/>
+                                                <rect key="frame" x="150" y="0.0" width="75" height="100"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5o-Bj-PT6">
                                                         <rect key="frame" x="7.5" y="20" width="60" height="60"/>
@@ -223,6 +179,50 @@
                                                 <constraints>
                                                     <constraint firstItem="W5o-Bj-PT6" firstAttribute="centerX" secondItem="yJ4-t6-d8N" secondAttribute="centerX" id="O7t-du-qM3"/>
                                                     <constraint firstItem="W5o-Bj-PT6" firstAttribute="centerY" secondItem="yJ4-t6-d8N" secondAttribute="centerY" id="eyx-dI-PKh"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8x7-9q-P0P">
+                                                <rect key="frame" x="225" y="0.0" width="75" height="100"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GfE-j1-6UV">
+                                                        <rect key="frame" x="7.5" y="20" width="60" height="60"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bin" translatesAutoresizingMaskIntoConstraints="NO" id="LCJ-Yi-KTs">
+                                                                <rect key="frame" x="18" y="18" width="24" height="24"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="24" id="MHl-p7-558"/>
+                                                                    <constraint firstAttribute="height" constant="24" id="gRp-Ho-hwW"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yM3-Zf-hQK">
+                                                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" title="Bin"/>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="1" green="0.57941256539999997" blue="0.42857822080000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <constraints>
+                                                            <constraint firstItem="yM3-Zf-hQK" firstAttribute="width" secondItem="GfE-j1-6UV" secondAttribute="width" id="86Q-uI-jmH"/>
+                                                            <constraint firstItem="yM3-Zf-hQK" firstAttribute="height" secondItem="GfE-j1-6UV" secondAttribute="height" id="9dJ-vK-YLk"/>
+                                                            <constraint firstItem="yM3-Zf-hQK" firstAttribute="centerY" secondItem="GfE-j1-6UV" secondAttribute="centerY" id="BNj-rS-dmb"/>
+                                                            <constraint firstItem="LCJ-Yi-KTs" firstAttribute="centerY" secondItem="GfE-j1-6UV" secondAttribute="centerY" id="Btb-1Z-Cyj"/>
+                                                            <constraint firstItem="LCJ-Yi-KTs" firstAttribute="centerX" secondItem="GfE-j1-6UV" secondAttribute="centerX" id="Nqo-A9-mWz"/>
+                                                            <constraint firstAttribute="height" constant="60" id="YKC-6g-g4J"/>
+                                                            <constraint firstAttribute="width" constant="60" id="crj-qw-riy"/>
+                                                            <constraint firstItem="yM3-Zf-hQK" firstAttribute="centerX" secondItem="GfE-j1-6UV" secondAttribute="centerX" id="urk-Rv-U7v"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
+                                                                <integer key="value" value="30"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="GfE-j1-6UV" firstAttribute="centerX" secondItem="8x7-9q-P0P" secondAttribute="centerX" id="qxd-Al-0CV"/>
+                                                    <constraint firstItem="GfE-j1-6UV" firstAttribute="centerY" secondItem="8x7-9q-P0P" secondAttribute="centerY" id="zNA-rH-zCU"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yDo-iT-OPX">
@@ -444,6 +444,8 @@
                     <connections>
                         <outlet property="addButton" destination="otq-Ai-G46" id="fQN-5X-uGF"/>
                         <outlet property="addView" destination="R0p-TU-quI" id="4gb-dM-sXI"/>
+                        <outlet property="binButton" destination="yM3-Zf-hQK" id="7mE-ji-bVr"/>
+                        <outlet property="binView" destination="8x7-9q-P0P" id="PDr-cV-xBf"/>
                         <outlet property="cancelButton" destination="c2O-mz-AaM" id="ymM-Ze-Ju1"/>
                         <outlet property="cancelView" destination="yJ4-t6-d8N" id="E2v-bc-Bfl"/>
                         <outlet property="checkButton" destination="9ft-K3-rNU" id="D91-Pl-Giq"/>
@@ -451,8 +453,6 @@
                         <outlet property="doneButton" destination="n6N-Mn-7Zy" id="3Yu-q6-aKM"/>
                         <outlet property="doneView" destination="yDo-iT-OPX" id="xNb-Xt-SuV"/>
                         <outlet property="menuView" destination="Z83-xu-zA9" id="2TY-ar-cmU"/>
-                        <outlet property="modeButton" destination="yM3-Zf-hQK" id="4hW-KR-cFS"/>
-                        <outlet property="modeView" destination="8x7-9q-P0P" id="RR4-gD-FDK"/>
                         <outlet property="popupDate" destination="6us-OZ-blO" id="Czp-nz-U0p"/>
                         <outlet property="popupDescriptionLabel" destination="w9B-HS-9ut" id="GpI-pt-b1g"/>
                         <outlet property="popupDoneButton" destination="Fgi-Ee-81c" id="hHH-Yx-lSF"/>
@@ -471,7 +471,7 @@
     </scenes>
     <resources>
         <image name="add" width="64" height="64"/>
-        <image name="calendar" width="64" height="64"/>
+        <image name="bin" width="64" height="64"/>
         <image name="check" width="64" height="64"/>
         <image name="checklist" width="64" height="64"/>
         <image name="cross" width="64" height="64"/>

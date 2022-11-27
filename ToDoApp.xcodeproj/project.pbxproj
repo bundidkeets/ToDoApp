@@ -144,6 +144,15 @@
 			path = TaskIcon;
 			sourceTree = "<group>";
 		};
+		B0894753293385D50046A45D /* Customization */ = {
+			isa = PBXGroup;
+			children = (
+				B08716C6293240EC00FCC10A /* GradientView */,
+				B08716DC2932773000FCC10A /* TaskIcon */,
+			);
+			path = Customization;
+			sourceTree = "<group>";
+		};
 		B0A15D022931D2FB0018D98B = {
 			isa = PBXGroup;
 			children = (
@@ -165,14 +174,11 @@
 		B0A15D0D2931D2FB0018D98B /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
-				B08716DC2932773000FCC10A /* TaskIcon */,
-				B08716C6293240EC00FCC10A /* GradientView */,
+				B0894753293385D50046A45D /* Customization */,
 				B0D1DE5F29320DED00494D1B /* Connectivity */,
 				B0D1DE4C2931F13700494D1B /* ToDo */,
 				B0D1DE302931E4F500494D1B /* Authenticate */,
 				B0D1DE2F2931E4E300494D1B /* Common */,
-				B0A15D172931D2FD0018D98B /* Assets.xcassets */,
-				B0A15D192931D2FD0018D98B /* LaunchScreen.storyboard */,
 				B0A15D1C2931D2FD0018D98B /* Info.plist */,
 			);
 			path = ToDoApp;
@@ -181,6 +187,8 @@
 		B0D1DE2F2931E4E300494D1B /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				B0A15D172931D2FD0018D98B /* Assets.xcassets */,
+				B0A15D192931D2FD0018D98B /* LaunchScreen.storyboard */,
 				B0A15D0E2931D2FB0018D98B /* AppDelegate.swift */,
 				B0A15D102931D2FB0018D98B /* SceneDelegate.swift */,
 				B0A15D122931D2FB0018D98B /* MainViewController.swift */,

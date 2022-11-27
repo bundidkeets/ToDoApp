@@ -22,6 +22,7 @@ class RegisterView: UIViewController {
     // VARIABLES HERE
     private var viewModel: RegisterViewModelProtocol!
     private let disposeBag = DisposeBag()
+    private var leftButton: UIButton?
     
     static func createModule(with viewModel: RegisterViewModel) -> UIViewController {
         guard let view = UIStoryboard(name: "\(Self.self)", bundle: nil).instantiateInitialViewController() as? RegisterView else {
@@ -42,6 +43,18 @@ class RegisterView: UIViewController {
     }
     
     func setupView() {
+        navigationItem.hidesBackButton = true
+        leftButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: .greatestFiniteMagnitude))
+        leftButton?.backgroundColor = .clear
+        leftButton?.setTitle("", for: .normal)
+        leftButton?.setTitleColor(.darkGray, for: .normal)
+        leftButton?.setImage(UIImage(named: "back"), for: .normal)
+        leftButton?.contentHorizontalAlignment = .left
+        
+        if let leftButton = leftButton {
+            navigationItem.leftBarButtonItem = .init(customView: leftButton)
+        }
+        
         viewModel.onError = { [weak self] error in
             self?.dismissWaiting()
             self?.showAlert("Error", message: "\(error)", action: "OK")
@@ -82,6 +95,12 @@ class RegisterView: UIViewController {
             .bind { [weak self] in
                 self?.clearInput()
             }.disposed(by: disposeBag)
+        
+        leftButton?.rx.tap
+            .bind { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            }.disposed(by: disposeBag)
+        
     }
     
     // MARK: Check view has destroy

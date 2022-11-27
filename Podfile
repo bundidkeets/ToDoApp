@@ -17,10 +17,8 @@ end
   # Pods for ToDoApp
   pod 'Moya'
   pod 'Moya/RxSwift'
-  pod 'RxGesture'
   pod 'RxCocoa'
   pod 'Moya-ObjectMapper/RxSwift'
-  pod 'SwipeCellKit'
   pod 'PKHUD'
   pod 'IQKeyboardManagerSwift'
   pod 'UIColor_Hex_Swift'
