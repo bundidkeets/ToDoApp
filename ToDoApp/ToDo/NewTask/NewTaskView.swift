@@ -64,7 +64,7 @@ class NewTaskView: UIViewController {
         modalView.roundCorners([.topLeft, .bottomLeft], radius: 20)
         
         viewModel.onSuccess = { [weak self] in
-            self?.showAlert("Done", message: "Add new task!!", action: "OK", completion: {
+            self?.showAlert("Done", message: "Add new task!!", action: "OK", completion: { _ in
                 self?.dismissView()
                 self?.afterDismiss?()
             })

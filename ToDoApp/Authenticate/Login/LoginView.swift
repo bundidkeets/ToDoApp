@@ -52,8 +52,14 @@ class LoginView: UIViewController {
             UserDefaults.standard.setValue(event.token, forKey: "accessToken")
             self?.dismissWaiting()
             print("go todo list")
-            let todoVC = ToDoListView.createModule(with: ToDoListViewModel())
+            guard let todoVC = ToDoListView.createModule(with: ToDoListViewModel()) as? ToDoListView else { return }
             self?.navigationController?.pushViewController(todoVC, animated: true)
+            
+            todoVC.afterLogout = {
+                UserDefaults.standard.setValue("", forKey: "accessToken")
+                self?.emailField.text = ""
+                self?.passwordField.text = ""
+            }
         }
     }
     

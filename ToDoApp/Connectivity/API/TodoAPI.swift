@@ -20,6 +20,7 @@ private extension String {
 public enum TodoAPI {
     case addTask(description: String)
     case getTask
+    case getTaskById(id: String)
     case getCompleted
 }
 
@@ -66,6 +67,8 @@ extension TodoAPI: TargetType {
             return "/task"
         case .getCompleted:
             return "/task?completed=true"
+        case .getTaskById(id: let id):
+            return "/task/\(id)"
         }
     }
     
@@ -76,6 +79,8 @@ extension TodoAPI: TargetType {
         case .getTask:
             return .get
         case .getCompleted:
+            return .get
+        case .getTaskById:
             return .get
         }
     }

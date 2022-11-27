@@ -9,6 +9,7 @@ import Foundation
 import ObjectMapper
 
 struct NewTaskModel: Codable {
+    public var id: String?
     public var name: String?
     public var description: String?
     public var date: String?

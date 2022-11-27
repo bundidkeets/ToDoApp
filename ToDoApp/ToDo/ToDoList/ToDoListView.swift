@@ -30,6 +30,14 @@ class ToDoListView: UIViewController {
     @IBOutlet weak var cancelView: UIView!
     @IBOutlet weak var doneView: UIView!
     @IBOutlet weak var menuView: UIView!
+    @IBOutlet weak var popupView: UIView!
+    @IBOutlet weak var popupName: UILabel!
+    @IBOutlet weak var popupDate: UILabel!
+    @IBOutlet weak var popupTime: UILabel!
+    @IBOutlet weak var popupIconView: UIView!
+    @IBOutlet weak var popupIconImage: UIImageView!
+    @IBOutlet weak var popupDescriptionLabel: UILabel!
+    @IBOutlet weak var popupDoneButton: UIButton!
     
     
     // VARIABLES HERE
@@ -50,6 +58,7 @@ class ToDoListView: UIViewController {
     var numberOfSection = 1
     var checkMode = false
     var isDoneMode = false
+    var afterLogout: (() -> Void)?
     
     static func createModule(with viewModel: ToDoListViewModel) -> UIViewController {
         guard let view = UIStoryboard(name: "\(Self.self)", bundle: nil).instantiateInitialViewController() as? ToDoListView else {
@@ -101,6 +110,17 @@ class ToDoListView: UIViewController {
                 navigationItem.rightBarButtonItem = .init(customView: rightButton)
             }
             
+            leftButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: .greatestFiniteMagnitude))
+            leftButton?.backgroundColor = .clear
+            leftButton?.setTitle("", for: .normal)
+            leftButton?.setTitleColor(.darkGray, for: .normal)
+            leftButton?.setImage(UIImage(named: "logout"), for: .normal)
+            leftButton?.contentHorizontalAlignment = .left
+            
+            if let leftButton = leftButton {
+                navigationItem.leftBarButtonItem = .init(customView: leftButton)
+            }
+            
             menuView.isHidden = false
         }
         
@@ -111,6 +131,8 @@ class ToDoListView: UIViewController {
         addView.setCircle()
         cancelView.setCircle()
         doneView.setCircle()
+        popupDoneButton.setRectangle()
+        dismissPopup()
         
         viewModel.onError = { [weak self] error in
             self?.dismissWaiting()
@@ -120,6 +142,17 @@ class ToDoListView: UIViewController {
         viewModel.onSuccessGetTask = { [weak self] event in
             self?.dismissWaiting()
             self?.convertToTaskObject(event)
+        }
+        
+        viewModel.loggedOut = { [weak self]  in
+            self?.dismissWaiting()
+            self?.afterLogout?()
+        }
+        
+        viewModel.onSuccessGetTaskById = { [weak self] taskObject in
+            self?.dismissWaiting()
+            guard let taskModel = self?.convertTaskRespToNewTaskModel(taskObject) else { return }
+            self?.showPopup(taskModel)
         }
         
         reloadContent()
@@ -142,10 +175,21 @@ class ToDoListView: UIViewController {
                 self?.navigationController?.pushViewController(todoVC, animated: true)
             }.disposed(by: disposeBag)
         
+        
         leftButton?.rx.tap
             .bind { [weak self] in
                 print("Go Done Page")
-                self?.navigationController?.popViewController(animated: true)
+                if self?.isDoneMode == true {
+                    self?.navigationController?.popViewController(animated: true)
+                } else {
+                    self?.showAlert("Logout", message: "Are you sure to logout?", action: "Logout", cancelMessage: "Later" , completion: { selection in
+                        if selection == true {
+                            self?.showWaiting()
+                            self?.viewModel.logout()
+                        }
+                    })
+                }
+                
             }.disposed(by: disposeBag)
         
         addButton?.rx.tap
@@ -161,7 +205,10 @@ class ToDoListView: UIViewController {
                 }
             }.disposed(by: disposeBag)
         
-        
+        popupDoneButton?.rx.tap
+            .bind { [weak self] in
+                self?.dismissPopup()
+            }.disposed(by: disposeBag)
     }
     
     func loadTaskList(){
@@ -174,16 +221,58 @@ class ToDoListView: UIViewController {
         viewModel.getDoneList()
     }
     
+    func clearPopup(){
+        let icon1:TaskIcon = .icon1
+        popupName.text = ""
+        popupDate.text = ""
+        popupTime.text = ""
+        popupDescriptionLabel.text = ""
+        popupIconView.backgroundColor = icon1.backgroundColor
+        popupIconImage.image = UIImage(named: icon1.imageName)
+    }
+    
+    func showPopup(_ item: NewTaskModel){
+        clearPopup()
+        popupView.isHidden = false
+        
+        popupName.text = item.name
+        popupDate.text = item.date
+        popupTime.text = item.time
+        popupDescriptionLabel.text = item.description
+        popupIconView.backgroundColor = getTaskIcon(item.icon ?? "").backgroundColor
+        popupIconImage.image = UIImage(named: getTaskIcon(item.icon ?? "").imageName)
+    }
+    
+    func dismissPopup(){
+        popupView.isHidden = true
+    }
+    
     func convertToTaskObject(_ descriptions: [TaskResponse]){
         taskList = []
         for data in descriptions {
-            guard let desc = data.description else { return }
+            guard let desc = data.description ,
+                  let id = data.id
+            else { return }
             if let data = desc.data(using: .utf8) {
-                guard let newTaskObj = try? JSONDecoder().decode(NewTaskModel.self, from: data) else { return }
+                guard var newTaskObj = try? JSONDecoder().decode(NewTaskModel.self, from: data) else { return }
+                newTaskObj.id = id
                 taskList.append(newTaskObj)
             }
         }
         tableView.reloadData()
+    }
+    
+    func convertTaskRespToNewTaskModel(_ data: TaskResponse) -> NewTaskModel {
+        guard let desc = data.description ,
+              let id = data.id
+        else { return NewTaskModel() }
+        if let data = desc.data(using: .utf8) {
+            guard var newTaskObj = try? JSONDecoder().decode(NewTaskModel.self, from: data) else { return NewTaskModel() }
+            newTaskObj.id = id
+            return newTaskObj
+        } else {
+            return NewTaskModel()
+        }
     }
     
     func defaultButton(){
@@ -248,5 +337,14 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !checkMode {
+            guard let id = taskList[indexPath.row].id else { return }
+            showWaiting()
+            viewModel.getTaskById(id)
+        }
+        
     }
 }

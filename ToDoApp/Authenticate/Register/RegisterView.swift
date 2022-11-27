@@ -49,7 +49,7 @@ class RegisterView: UIViewController {
         
         viewModel.onSuccess = { [weak self] in
             self?.dismissWaiting()
-            self?.showAlert("Done", message: "Your registration is success.", action: "OK", completion: {
+            self?.showAlert("Done", message: "Your registration is success.", action: "OK", completion: { _ in
                 self?.navigationController?.popViewController(animated: true)
             })
         }

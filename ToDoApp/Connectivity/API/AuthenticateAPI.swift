@@ -21,6 +21,7 @@ public enum AuthenticateAPI {
     case register(register: RegisterModel)
     case login(login: LoginModel)
     case me
+    case logout
 }
 
 extension AuthenticateAPI: TargetType {
@@ -66,6 +67,8 @@ extension AuthenticateAPI: TargetType {
             return "/user/login"
         case .me:
             return "/user/me"
+        case .logout:
+            return "/user/logout"
         }
     }
     
@@ -79,6 +82,9 @@ extension AuthenticateAPI: TargetType {
             
         case .me:
             return .get
+            
+        case .logout:
+            return .post
         }
     }
     

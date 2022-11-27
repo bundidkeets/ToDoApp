@@ -22,12 +22,24 @@ public struct ToDoResponse: Mappable {
     }
 }
 
+public struct ToDoSingleResponse: Mappable {
+    public var data: TaskResponse?
+
+    public init?(map: Map) { }
+
+    mutating public func mapping(map: Map) {
+        data <- map["data"]
+    }
+}
+
 public struct TaskResponse: Mappable {
     public var description: String?
+    public var id: String?
 
     public init?(map: Map) { }
 
     mutating public func mapping(map: Map) {
         description <- map["description"]
+        id <- map["_id"]
     }
 }

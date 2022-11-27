@@ -1,5 +1,5 @@
 //
-//  AuthenticateContext.swift
+//  ConnectivityContext.swift
 //  ToDoApp
 //
 //  Created by Bundid on 26/11/2565 BE.
@@ -47,6 +47,12 @@ extension ConnectivityContext {
             .mapObject(UserResponse.self)
     }
     
+    func logout() -> Observable<Response> {
+        return authenProvider!.rx.request(.logout)
+            .asObservable()
+            .filterSuccessfulStatusAndRedirectCodes()
+    }
+    
     // To Do
     func addTask(task: String) -> Observable<Response> {
         return todoProvider!.rx.request(.addTask(description: task))
@@ -58,6 +64,12 @@ extension ConnectivityContext {
         return todoProvider!.rx.request(.getTask)
             .asObservable()
             .mapObject(ToDoResponse.self)
+    }
+    
+    func getTaskById(id: String) -> Observable<ToDoSingleResponse> {
+        return todoProvider!.rx.request(.getTaskById(id: id))
+            .asObservable()
+            .mapObject(ToDoSingleResponse.self)
     }
     
     func getDone() -> Observable<ToDoResponse> {

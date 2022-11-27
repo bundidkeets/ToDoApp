@@ -33,8 +33,13 @@ class MainViewController: UIViewController {
         onSuccess = { [weak self] in
             self?.dismissWaiting()
             print("go todo list")
-            let todoVC = ToDoListView.createModule(with: ToDoListViewModel())
+            guard let todoVC = ToDoListView.createModule(with: ToDoListViewModel()) as? ToDoListView else { return }
             self?.navigationController?.pushViewController(todoVC, animated: true)
+            
+            todoVC.afterLogout = {
+                UserDefaults.standard.setValue("", forKey: "accessToken")
+                self?.showLogin()
+            }
         }
     }
 
@@ -70,13 +75,20 @@ extension NSObject {
 }
 
 extension UIViewController {
-    public func showAlert(_ title: String, message: String?, action: String, completion: (() -> Void)? = nil) {
+    public func showAlert(_ title: String, message: String?, action: String, cancelMessage: String? = nil, completion: ((Bool) -> Void)? = nil) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let ok = UIAlertAction(title: action, style: .default, handler: { _ in
-                completion?()
+                completion?(true)
             })
             alertController.addAction(ok)
+            
+            if cancelMessage != nil {
+                let cancel = UIAlertAction(title: cancelMessage, style: .cancel, handler: { _ in
+                    completion?(false)
+                })
+                alertController.addAction(cancel)
+            }
             self.present(alertController, animated: true, completion: nil)
         }
     }
