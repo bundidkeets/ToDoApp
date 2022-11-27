@@ -92,7 +92,7 @@ extension UIViewController {
 
 extension UIView {
     func setCircle(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.layer.cornerRadius = self.frame.size.width / 2.0
         }
     }

@@ -53,6 +53,12 @@ extension ConnectivityContext {
             .asObservable()
             .filterSuccessfulStatusAndRedirectCodes()
     }
+    
+    func getTask() -> Observable<ToDoResponse> {
+        return todoProvider!.rx.request(.getTask)
+            .asObservable()
+            .mapObject(ToDoResponse.self)
+    }
 }
 
 class UncacheProvider<Target>: MoyaProvider<Target> where Target: TargetType {

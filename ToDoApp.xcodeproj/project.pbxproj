@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		133059DEAF619CDF400566A4 /* Pods_ToDoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91069623CBA2EBA9A1F94F11 /* Pods_ToDoApp.framework */; };
 		B08716C82932410700FCC10A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08716C72932410700FCC10A /* GradientView.swift */; };
-		B08716CB2932484800FCC10A /* ToDoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08716CA2932484800FCC10A /* ToDoTableViewCell.swift */; };
 		B08716CD2932591200FCC10A /* TodoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08716CC2932591200FCC10A /* TodoAPI.swift */; };
 		B08716D5293262E200FCC10A /* NewTaskView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B08716D1293262E200FCC10A /* NewTaskView.storyboard */; };
 		B08716D6293262E200FCC10A /* NewTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08716D2293262E200FCC10A /* NewTaskView.swift */; };
@@ -17,6 +16,8 @@
 		B08716D8293262E200FCC10A /* NewTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08716D4293262E200FCC10A /* NewTaskViewModel.swift */; };
 		B08716DB2932752700FCC10A /* IconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08716DA2932752700FCC10A /* IconCollectionViewCell.swift */; };
 		B08716DE2932775400FCC10A /* TaskIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08716DD2932775400FCC10A /* TaskIcon.swift */; };
+		B08986F52933578600F25F77 /* ToDoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08986F32933578600F25F77 /* ToDoTableViewCell.swift */; };
+		B08986F62933578600F25F77 /* ToDoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B08986F42933578600F25F77 /* ToDoTableViewCell.xib */; };
 		B0A15D0F2931D2FB0018D98B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A15D0E2931D2FB0018D98B /* AppDelegate.swift */; };
 		B0A15D112931D2FB0018D98B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A15D102931D2FB0018D98B /* SceneDelegate.swift */; };
 		B0A15D132931D2FB0018D98B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A15D122931D2FB0018D98B /* MainViewController.swift */; };
@@ -42,7 +43,6 @@
 /* Begin PBXFileReference section */
 		91069623CBA2EBA9A1F94F11 /* Pods_ToDoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B08716C72932410700FCC10A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		B08716CA2932484800FCC10A /* ToDoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewCell.swift; sourceTree = "<group>"; };
 		B08716CC2932591200FCC10A /* TodoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAPI.swift; sourceTree = "<group>"; };
 		B08716D1293262E200FCC10A /* NewTaskView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewTaskView.storyboard; sourceTree = "<group>"; };
 		B08716D2293262E200FCC10A /* NewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskView.swift; sourceTree = "<group>"; };
@@ -50,6 +50,8 @@
 		B08716D4293262E200FCC10A /* NewTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewModel.swift; sourceTree = "<group>"; };
 		B08716DA2932752700FCC10A /* IconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionViewCell.swift; sourceTree = "<group>"; };
 		B08716DD2932775400FCC10A /* TaskIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIcon.swift; sourceTree = "<group>"; };
+		B08986F32933578600F25F77 /* ToDoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewCell.swift; sourceTree = "<group>"; };
+		B08986F42933578600F25F77 /* ToDoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToDoTableViewCell.xib; sourceTree = "<group>"; };
 		B0A15D0B2931D2FB0018D98B /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A15D0E2931D2FB0018D98B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0A15D102931D2FB0018D98B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,20 +99,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B0273FFE2933574D00C4FD37 /* ToDoCell */ = {
+			isa = PBXGroup;
+			children = (
+				B08986F32933578600F25F77 /* ToDoTableViewCell.swift */,
+				B08986F42933578600F25F77 /* ToDoTableViewCell.xib */,
+			);
+			path = ToDoCell;
+			sourceTree = "<group>";
+		};
 		B08716C6293240EC00FCC10A /* GradientView */ = {
 			isa = PBXGroup;
 			children = (
 				B08716C72932410700FCC10A /* GradientView.swift */,
 			);
 			path = GradientView;
-			sourceTree = "<group>";
-		};
-		B08716C9293247FB00FCC10A /* TableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				B08716CA2932484800FCC10A /* ToDoTableViewCell.swift */,
-			);
-			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 		B08716D0293262D900FCC10A /* NewTask */ = {
@@ -220,7 +223,7 @@
 		B0D1DE432931F12200494D1B /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
-				B08716C9293247FB00FCC10A /* TableViewCell */,
+				B0273FFE2933574D00C4FD37 /* ToDoCell */,
 				B0D1DE442931F12F00494D1B /* ToDoListView.storyboard */,
 				B0D1DE452931F12F00494D1B /* ToDoListView.swift */,
 				B0D1DE462931F12F00494D1B /* ToDoListModel.swift */,
@@ -331,6 +334,7 @@
 				B0D1DE372931E50B00494D1B /* LoginView.storyboard in Resources */,
 				B08716D5293262E200FCC10A /* NewTaskView.storyboard in Resources */,
 				B0D1DE482931F12F00494D1B /* ToDoListView.storyboard in Resources */,
+				B08986F62933578600F25F77 /* ToDoTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,11 +398,11 @@
 				B0D1DE492931F12F00494D1B /* ToDoListView.swift in Sources */,
 				B08716D7293262E200FCC10A /* NewTaskModel.swift in Sources */,
 				B08716C82932410700FCC10A /* GradientView.swift in Sources */,
+				B08986F52933578600F25F77 /* ToDoTableViewCell.swift in Sources */,
 				B0D1DE6129320E1300494D1B /* ConnectivityContext.swift in Sources */,
 				B08716D8293262E200FCC10A /* NewTaskViewModel.swift in Sources */,
 				B0D1DE412931E51400494D1B /* RegisterModel.swift in Sources */,
 				B0A15D0F2931D2FB0018D98B /* AppDelegate.swift in Sources */,
-				B08716CB2932484800FCC10A /* ToDoTableViewCell.swift in Sources */,
 				B0D1DE6429320E8C00494D1B /* AuthenticateAPI.swift in Sources */,
 				B0D1DE382931E50B00494D1B /* LoginView.swift in Sources */,
 				B08716CD2932591200FCC10A /* TodoAPI.swift in Sources */,

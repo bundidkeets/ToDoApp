@@ -12,14 +12,22 @@ struct ToDoListModel {
     
 }
 
-//public struct ToDoResponse: Mappable {
-//    public var user: UserResponse?
-//    public var token: String?
-//
-//    public init?(map: Map) { }
-//
-//    mutating public func mapping(map: Map) {
-//        user <- map["user"]
-//        token <- map["token"]
-//    }
-//}
+public struct ToDoResponse: Mappable {
+    public var data: [TaskResponse]?
+
+    public init?(map: Map) { }
+
+    mutating public func mapping(map: Map) {
+        data <- map["data"]
+    }
+}
+
+public struct TaskResponse: Mappable {
+    public var description: String?
+
+    public init?(map: Map) { }
+
+    mutating public func mapping(map: Map) {
+        description <- map["description"]
+    }
+}

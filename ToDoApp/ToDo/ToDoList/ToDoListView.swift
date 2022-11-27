@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ObjectMapper
 
 enum listMode: Int {
     case defaultMode
@@ -23,12 +24,18 @@ class ToDoListView: UIViewController {
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var checkView: UIView!
+    @IBOutlet weak var modeView: UIView!
+    @IBOutlet weak var addView: UIView!
+    @IBOutlet weak var cancelView: UIView!
+    @IBOutlet weak var doneView: UIView!
     
     
     // VARIABLES HERE
     private var viewModel: ToDoListViewModelProtocol!
     private let disposeBag = DisposeBag()
     private var rightButton: UIButton?
+    private var taskList: [NewTaskModel] = []
     var listMode: listMode? = .defaultMode {
         didSet {
             if listMode == .defaultMode {
@@ -59,17 +66,37 @@ class ToDoListView: UIViewController {
     }
     
     func setupView() {
+        tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "todo")
         listMode = .defaultMode
         navigationItem.hidesBackButton = true
         navigationItem.title = "TODO"
         rightButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: .greatestFiniteMagnitude))
         rightButton?.backgroundColor = .clear
-        rightButton?.setTitle("Done", for: .normal)
+        rightButton?.setTitle("", for: .normal)
         rightButton?.setTitleColor(.darkGray, for: .normal)
+        rightButton?.setImage(UIImage(named: "checkbox"), for: .normal)
         rightButton?.contentHorizontalAlignment = .right
         if let rightButton = rightButton {
             navigationItem.rightBarButtonItem = .init(customView: rightButton)
         }
+        
+        checkView.setCircle()
+        modeView.setCircle()
+        addView.setCircle()
+        cancelView.setCircle()
+        doneView.setCircle()
+        
+        viewModel.onError = { [weak self] error in
+            self?.dismissWaiting()
+            self?.showAlert("Error", message: "\(error)", action: "OK")
+        }
+        
+        viewModel.onSuccessGetTask = { [weak self] event in
+            self?.dismissWaiting()
+            self?.convertToTaskObject(event)
+        }
+        
+        loadTaskList()
     }
     
     func setupRX(){
@@ -90,20 +117,36 @@ class ToDoListView: UIViewController {
         
     }
     
+    func loadTaskList(){
+        viewModel.getTask()
+    }
+    
+    func convertToTaskObject(_ descriptions: [TaskResponse]){
+        taskList = []
+        for data in descriptions {
+            guard let desc = data.description else { return }
+            if let data = desc.data(using: .utf8) {
+                guard let newTaskObj = try? JSONDecoder().decode(NewTaskModel.self, from: data) else { return }
+                taskList.append(newTaskObj)
+            }
+        }
+        tableView.reloadData()
+    }
+    
     func defaultButton(){
-        checkButton.isHidden = false
-        modeButton.isHidden = false
-        addButton.isHidden = false
-        cancelButton.isHidden = true
-        doneButton.isHidden = true
+        checkView.isHidden = false
+        modeView.isHidden = false
+        addView.isHidden = false
+        cancelView.isHidden = true
+        doneView.isHidden = true
     }
     
     func checkModeButton(){
-        checkButton.isHidden = true
-        modeButton.isHidden = true
-        addButton.isHidden = true
-        cancelButton.isHidden = false
-        doneButton.isHidden = false
+        checkView.isHidden = true
+        modeView.isHidden = true
+        addView.isHidden = true
+        cancelView.isHidden = false
+        doneView.isHidden = false
     }
     
     // MARK: Check view has destroy
@@ -125,13 +168,21 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return taskList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "todo", for: indexPath) as? ToDoTableViewCell else {
             return UITableViewCell()
         }
+        
+        let taskObj = taskList[indexPath.row]
+        cell.bullet.backgroundColor = getTaskIcon(taskObj.icon ?? "").backgroundColor
+        cell.iconView.backgroundColor = getTaskIcon(taskObj.icon ?? "").backgroundColor
+        cell.iconImage.image = UIImage(named: getTaskIcon(taskObj.icon ?? "").imageName)
+        cell.taskLabel.text = taskObj.name ?? ""
+        cell.dateLabel.text = taskObj.date ?? ""
+        cell.timeLabel.text = taskObj.time ?? ""
         return cell
     }
 }

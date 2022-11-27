@@ -12,12 +12,12 @@ import Moya
 // MARK: View -> ViewModel
 protocol ToDoListViewModelInput {
     func viewDidLoad()
-    
+    func getTask()
 }
 
 // MARK: ViewModel -> View
 protocol ToDoListViewModelOutput {
-    var onSuccess: (() -> Void)? { get set }
+    var onSuccessGetTask: (([TaskResponse]) -> Void)? { get set }
     var onError: ((String) -> Void)? { get set }
 }
 
@@ -27,7 +27,7 @@ class ToDoListViewModel: ToDoListViewModelProtocol, ToDoListViewModelOutput {
     
     var dataModel = ToDoListModel()
     private let disposeBag = DisposeBag()
-    var onSuccess: (() -> Void)?
+    var onSuccessGetTask: (([TaskResponse]) -> Void)?
     var onError: ((String) -> Void)?
 }
 
@@ -37,5 +37,27 @@ extension ToDoListViewModel: ToDoListViewModelInput {
         
     }
     
-    
+    func getTask(){
+        let taskContext = ConnectivityContext()
+        taskContext.getTask()
+            .subscribe { [weak self] event in
+                switch event {
+                case .next:
+                    self?.onSuccessGetTask?(event.element?.data ?? [])
+                    
+                case .error(let error):
+                    if let json = try? JSONSerialization.jsonObject(with: (error as! MoyaError).response!.data, options: .mutableContainers),
+                       let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) {
+                        print(jsonData)
+                        self?.onError?("Have error occurred")
+                    } else {
+                        let response = String(data: (error as! MoyaError).response!.data, encoding: .utf8)!
+                        self?.onError?(response)
+                    }
+                    
+                case .completed:
+                    break
+                }
+            }.disposed(by: disposeBag)
+    }
 }

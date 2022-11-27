@@ -2,7 +2,7 @@
 //  ToDoTableViewCell.swift
 //  ToDoApp
 //
-//  Created by Bundid on 26/11/2565 BE.
+//  Created by Bundid on 27/11/2565 BE.
 //
 
 import UIKit
@@ -31,5 +31,5 @@ class ToDoTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }

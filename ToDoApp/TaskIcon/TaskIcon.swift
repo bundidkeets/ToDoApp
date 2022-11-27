@@ -40,3 +40,24 @@ enum TaskIcon {
     }
     
 }
+
+extension NSObject {
+    func getTaskIcon(_ iconName: String) -> TaskIcon {
+        switch iconName {
+        case "icon1":
+            return .icon1
+        case "icon2":
+            return .icon2
+        case "icon3":
+            return .icon3
+        case "icon4":
+            return .icon4
+        case "icon5":
+            return .icon5
+        case "icon6":
+            return .icon6
+        default:
+            return .icon1
+        }
+    }
+}
