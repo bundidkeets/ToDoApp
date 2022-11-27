@@ -13,6 +13,7 @@ import Moya
 protocol ToDoListViewModelInput {
     func viewDidLoad()
     func getTask()
+    func getDoneList()
 }
 
 // MARK: ViewModel -> View
@@ -40,6 +41,30 @@ extension ToDoListViewModel: ToDoListViewModelInput {
     func getTask(){
         let taskContext = ConnectivityContext()
         taskContext.getTask()
+            .subscribe { [weak self] event in
+                switch event {
+                case .next:
+                    self?.onSuccessGetTask?(event.element?.data ?? [])
+                    
+                case .error(let error):
+                    if let json = try? JSONSerialization.jsonObject(with: (error as! MoyaError).response!.data, options: .mutableContainers),
+                       let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) {
+                        print(jsonData)
+                        self?.onError?("Have error occurred")
+                    } else {
+                        let response = String(data: (error as! MoyaError).response!.data, encoding: .utf8)!
+                        self?.onError?(response)
+                    }
+                    
+                case .completed:
+                    break
+                }
+            }.disposed(by: disposeBag)
+    }
+    
+    func getDoneList() {
+        let taskContext = ConnectivityContext()
+        taskContext.getDone()
             .subscribe { [weak self] event in
                 switch event {
                 case .next:

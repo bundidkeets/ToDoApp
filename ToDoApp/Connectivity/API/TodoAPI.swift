@@ -20,6 +20,7 @@ private extension String {
 public enum TodoAPI {
     case addTask(description: String)
     case getTask
+    case getCompleted
 }
 
 extension TodoAPI: TargetType {
@@ -63,6 +64,8 @@ extension TodoAPI: TargetType {
             return "/task"
         case .getTask:
             return "/task"
+        case .getCompleted:
+            return "/task?completed=true"
         }
     }
     
@@ -71,6 +74,8 @@ extension TodoAPI: TargetType {
         case .addTask:
             return .post
         case .getTask:
+            return .get
+        case .getCompleted:
             return .get
         }
     }

@@ -29,12 +29,14 @@ class ToDoListView: UIViewController {
     @IBOutlet weak var addView: UIView!
     @IBOutlet weak var cancelView: UIView!
     @IBOutlet weak var doneView: UIView!
+    @IBOutlet weak var menuView: UIView!
     
     
     // VARIABLES HERE
     private var viewModel: ToDoListViewModelProtocol!
     private let disposeBag = DisposeBag()
     private var rightButton: UIButton?
+    private var leftButton: UIButton?
     private var taskList: [NewTaskModel] = []
     var listMode: listMode? = .defaultMode {
         didSet {
@@ -46,6 +48,8 @@ class ToDoListView: UIViewController {
         }
     }
     var numberOfSection = 1
+    var checkMode = false
+    var isDoneMode = false
     
     static func createModule(with viewModel: ToDoListViewModel) -> UIViewController {
         guard let view = UIStoryboard(name: "\(Self.self)", bundle: nil).instantiateInitialViewController() as? ToDoListView else {
@@ -69,16 +73,38 @@ class ToDoListView: UIViewController {
         tableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "todo")
         listMode = .defaultMode
         navigationItem.hidesBackButton = true
-        navigationItem.title = "TODO"
-        rightButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: .greatestFiniteMagnitude))
-        rightButton?.backgroundColor = .clear
-        rightButton?.setTitle("", for: .normal)
-        rightButton?.setTitleColor(.darkGray, for: .normal)
-        rightButton?.setImage(UIImage(named: "checkbox"), for: .normal)
-        rightButton?.contentHorizontalAlignment = .right
-        if let rightButton = rightButton {
-            navigationItem.rightBarButtonItem = .init(customView: rightButton)
+        
+        if isDoneMode {
+            navigationItem.title = "DONE TASKS"
+            
+            leftButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: .greatestFiniteMagnitude))
+            leftButton?.backgroundColor = .clear
+            leftButton?.setTitle("", for: .normal)
+            leftButton?.setTitleColor(.darkGray, for: .normal)
+            leftButton?.setImage(UIImage(named: "back"), for: .normal)
+            leftButton?.contentHorizontalAlignment = .left
+            
+            if let leftButton = leftButton {
+                navigationItem.leftBarButtonItem = .init(customView: leftButton)
+            }
+            menuView.isHidden = true
+        } else {
+            navigationItem.title = "TODO"
+            
+            rightButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: .greatestFiniteMagnitude))
+            rightButton?.backgroundColor = .clear
+            rightButton?.setTitle("", for: .normal)
+            rightButton?.setTitleColor(.darkGray, for: .normal)
+            rightButton?.setImage(UIImage(named: "checkbox"), for: .normal)
+            rightButton?.contentHorizontalAlignment = .right
+            if let rightButton = rightButton {
+                navigationItem.rightBarButtonItem = .init(customView: rightButton)
+            }
+            
+            menuView.isHidden = false
         }
+        
+        
         
         checkView.setCircle()
         modeView.setCircle()
@@ -96,29 +122,56 @@ class ToDoListView: UIViewController {
             self?.convertToTaskObject(event)
         }
         
-        loadTaskList()
+        reloadContent()
+    }
+    
+    func reloadContent() {
+        if isDoneMode {
+            loadDoneList()
+        } else {
+            loadTaskList()
+        }
     }
     
     func setupRX(){
         rightButton?.rx.tap
             .bind { [weak self] in
                 print("Go Done Page")
+                guard let todoVC = ToDoListView.createModule(with: ToDoListViewModel()) as? ToDoListView else { return }
+                todoVC.isDoneMode = true
+                self?.navigationController?.pushViewController(todoVC, animated: true)
+            }.disposed(by: disposeBag)
+        
+        leftButton?.rx.tap
+            .bind { [weak self] in
+                print("Go Done Page")
+                self?.navigationController?.popViewController(animated: true)
             }.disposed(by: disposeBag)
         
         addButton?.rx.tap
             .bind { [weak self] in
                 print("Show task view")
-                let newTaskVC = NewTaskView.createModule(with: NewTaskViewModel())
+                guard let newTaskVC = NewTaskView.createModule(with: NewTaskViewModel()) as? NewTaskView else { return }
                 newTaskVC.modalPresentationStyle = .custom
                 newTaskVC.modalTransitionStyle = .crossDissolve
                 self?.navigationController?.present(newTaskVC, animated: false)
+                
+                newTaskVC.afterDismiss = {
+                    self?.reloadContent()
+                }
             }.disposed(by: disposeBag)
         
         
     }
     
     func loadTaskList(){
+        showWaiting()
         viewModel.getTask()
+    }
+    
+    func loadDoneList(){
+        showWaiting()
+        viewModel.getDoneList()
     }
     
     func convertToTaskObject(_ descriptions: [TaskResponse]){
@@ -183,6 +236,17 @@ extension ToDoListView: UITableViewDelegate, UITableViewDataSource {
         cell.taskLabel.text = taskObj.name ?? ""
         cell.dateLabel.text = taskObj.date ?? ""
         cell.timeLabel.text = taskObj.time ?? ""
+        
+        if !checkMode || isDoneMode {
+            cell.checkImage.isHidden = true
+            cell.dateLabel.isHidden = false
+            cell.timeLabel.isHidden = false
+        } else {
+            cell.checkImage.isHidden = false
+            cell.dateLabel.isHidden = true
+            cell.timeLabel.isHidden = true
+        }
+        
         return cell
     }
 }

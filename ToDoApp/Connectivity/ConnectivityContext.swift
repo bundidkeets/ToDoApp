@@ -59,6 +59,12 @@ extension ConnectivityContext {
             .asObservable()
             .mapObject(ToDoResponse.self)
     }
+    
+    func getDone() -> Observable<ToDoResponse> {
+        return todoProvider!.rx.request(.getCompleted)
+            .asObservable()
+            .mapObject(ToDoResponse.self)
+    }
 }
 
 class UncacheProvider<Target>: MoyaProvider<Target> where Target: TargetType {

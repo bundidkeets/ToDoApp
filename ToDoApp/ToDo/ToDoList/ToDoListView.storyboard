@@ -317,6 +317,7 @@
                         <outlet property="checkView" destination="KIr-h8-3mD" id="qnP-Im-MOG"/>
                         <outlet property="doneButton" destination="n6N-Mn-7Zy" id="3Yu-q6-aKM"/>
                         <outlet property="doneView" destination="yDo-iT-OPX" id="xNb-Xt-SuV"/>
+                        <outlet property="menuView" destination="Z83-xu-zA9" id="2TY-ar-cmU"/>
                         <outlet property="modeButton" destination="yM3-Zf-hQK" id="4hW-KR-cFS"/>
                         <outlet property="modeView" destination="8x7-9q-P0P" id="RR4-gD-FDK"/>
                         <outlet property="tableView" destination="8S3-zY-3W2" id="G88-bm-VXN"/>

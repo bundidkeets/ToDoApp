@@ -33,6 +33,7 @@ class NewTaskView: UIViewController {
     private var isPickerDate = false
     private var selectedDate = Date()
     private var selectedTime = Date()
+    var afterDismiss: (() -> Void)?
     
     static func createModule(with viewModel: NewTaskViewModel) -> UIViewController {
         guard let view = UIStoryboard(name: "\(Self.self)", bundle: nil).instantiateInitialViewController() as? NewTaskView else {
@@ -63,8 +64,9 @@ class NewTaskView: UIViewController {
         modalView.roundCorners([.topLeft, .bottomLeft], radius: 20)
         
         viewModel.onSuccess = { [weak self] in
-            self?.showAlert("Done", message: "test", action: "OK", completion: {
+            self?.showAlert("Done", message: "Add new task!!", action: "OK", completion: {
                 self?.dismissView()
+                self?.afterDismiss?()
             })
         }
         
